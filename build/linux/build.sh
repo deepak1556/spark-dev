@@ -30,7 +30,8 @@ header "Working directory is ${TEMP_DIR}"
 wget https://github.com/atom/atom/archive/${ATOM_VERSION}.tar.gz -O - | tar -xz --strip-components=1
 
 header "Copy resources"
-cp ${BUILD}/sparkide.icns ${TEMP_DIR}/resources/linux/atom.icns
+cp ${BUILD}/sparkide.ico ${TEMP_DIR}/resources/linux/atom.ico
+cp ${BUILD}/atom.png ${TEMP_DIR}/resources/atom.png
 
 header "Append 3rd party packages to package.json"
 ${COMMON}/append-package ${TEMP_DIR}/package.json file-type-icons "0.4.4"
@@ -97,9 +98,8 @@ subheader "App version"
 ${COMMON}/set-version ${TEMP_DIR}/package.json ${SPARK_DEV_VERSION}
 
 header "Building app"
-build/node_modules/.bin/grunt --gruntfile build/Gruntfile.coffee --install-dir "${TARGET}/${APP_NAME}.app" download-atom-shell build set-version codesign install
+build/node_modules/.bin/grunt --gruntfile build/Gruntfile.coffee --install-dir "${TARGET}/${APP_NAME}" download-atom-shell build set-version codesign install
 
-# rm -rf $TEMP_DIR
+rm -rf $TEMP_DIR
 
 # header "Build ZIP"
-# ditto -ck --rsrc --sequesterRsrc --keepParent "${TARGET}/${APP_NAME}.app" "${TARGET}/${APP_NAME}.app.zip"
